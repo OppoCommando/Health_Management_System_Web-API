@@ -27,8 +27,9 @@ namespace HospitalBedAndBloodManagementSystem.Controllers
         {
             Models.BusinessAccess.UserMasterBusiness user = new Models.BusinessAccess.UserMasterBusiness();
             string msg = user.UserMaster_Save(userObj);
-            if (userObj.Msg != null)
+            if (msg != null)
             {
+               // userObj.Msg == msg;
                 return Ok(userObj.Msg);
             }
 
