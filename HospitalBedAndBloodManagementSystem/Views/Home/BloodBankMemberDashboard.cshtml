@@ -1,0 +1,39 @@
+﻿
+@{
+    ViewBag.Title = "BloodBankMemberDashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Blood Bank Member Dashboard</h2>
+<h1>welcome @this.User.Identity.Name.Split(',')[1]</h1>
+
+@{
+    if (this.User.IsInRole("1"))
+    {
+        <p1> You are an ADMIN</p1><br />
+
+        <a href="~/General/BloodBankMemberDetails"><b>Blood Bank Member Details</b></a><br />
+
+    }
+    else
+    {
+        <p1> You are a Blood Bank  Member</p1><br />
+    }
+}
+
+
+@{
+    if ((Convert.ToInt32(Session["HospitalId"]) == 0 && Convert.ToInt32(Session["BloodBankId"]) != 0))
+    {
+        <a href="~/BloodBank/BloodBankInfo"><b>Blood Bank Information </b></a><br />
+
+
+        <a href="~/Booking/GetBloodBookingRequest/@Convert.ToInt32(Session["HospitalId"])"><b>Request For Blood Details</b></a><br />
+
+
+        <a href="~/General/EditPersonalInfo/@Convert.ToInt32(Session["UserId"])"><b>Edit Personal Info</b></a><br />
+
+
+
+    }
+}

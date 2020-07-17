@@ -1,0 +1,87 @@
+﻿@using System.Data;
+@using HospitalBedAndBloodManagementSystem.Models;
+@model HospitalBedAndBloodManagementSystem.Models.HospitalInfoModel
+@{
+    ViewBag.Title = "HospitalInformationPage";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script>
+    function validateForm() {
+        var x = document.getElementById("HospitalId").value;
+        if (x == 0) {
+            alert("please select Hospital");
+            return false;
+        }
+
+    }
+</script>
+<style>
+    .TextBox {
+        width: 341px;
+        height: 35px
+    }
+</style>
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>HospitalInformationPage</title>
+</head>
+<body>
+    <h2 style="text-align:center;color:brown">Hospital's Bed Information </h2>
+    <div>
+    </div>
+    <div style="background-color:white">
+        <form action="~/Hospital/SaveBedInfo" method="POST">
+            <table border="0" align="center" class="tblclass">
+                <tr><td></td><td><label id="Msg" style="color:green">@Model.Msg</label><br /></td></tr>
+                <tr><td><input type="hidden" name="HospitalInfoId" value="@Model.HospitalInfoId" /></td></tr>
+                <tr>
+                    <td><label style="color:darkslateblue">Hospital Name<span style="color:red">*</span></label></td>
+                    <td>
+
+                        <select id="HospitalId" name="HospitalId" style="width:400px;height:35px" required>
+                            <option value="0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--Select--</option>
+                            @{
+                                foreach (HospitalInfoModel h in Model.hospitals)
+                                {
+                                    if (h.HospitalId == Model.HospitalId)
+                                    {
+                                        <option value="@h.HospitalId" selected>@h.Hospital</option>
+                                        continue;
+                                    }
+                                    @*<option value="@b.BloodBankId">@b.BloodBank</option>*@
+                                }
+                            }
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <br />
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td style="color:red">No. of Available Beds </td>
+                    <td><input type="number" id="AvailableBeds" name="AvailableBeds" value="@Model.AvailableBeds" /> </td>
+                </tr>
+                
+                <tr>
+                    <td><br /></td>
+                </tr>
+                <tr>
+                    <td></td>
+
+                    <td><button type="submit" class="btn btn-primary m-t-15 waves-effect" style="width:100px" onclick="javascript:return validateForm()">Save</button></td>
+
+                </tr>
+
+            </table>
+        </form>
+    </div>
+</body>
+</html>
+

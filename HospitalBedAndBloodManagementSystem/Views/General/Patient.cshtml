@@ -1,0 +1,205 @@
+﻿@using System.Data;
+@using HospitalBedAndBloodManagementSystem.Models;
+@model HospitalBedAndBloodManagementSystem.Models.PatientViewModel
+
+@{
+    ViewBag.Title = "PatientRegistration";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .TextBox {
+        width: 341px;
+        height: 35px
+    }
+</style>
+<script>
+    function validateForm() {
+        var x = document.getElementById("Password").value;
+        var y = document.getElementById("ConfirmPassword").value;
+        var z = document.getElementById("DistrictId").value;
+
+       
+
+        if (x != y) {
+            alert("Please Enter same Password in Confirm Password");
+            return false;
+        }
+        if (z == 0) {
+            alert("please select District");
+            return false;
+            }
+
+
+    }
+</script>
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>PatientRegistration</title>
+</head>
+<body>
+    <div style="background-color:cornflowerblue">
+        <h3 style="color:white;text-align:center;text-shadow:inherit">Patient Registration Page</h3>
+        <div></div>
+        <div style="background-color:white">
+            <form action="~/General/PatientRegistration" method="POST" enctype="multipart/form-data">
+                <table border="0" align="center" class="tblclass">
+                    <tr><td></td><td><label id="Msg" style="color:coral">@Model.Msg</label><br /></td></tr>
+                    <tr><td><input type="hidden" name="PatientId" value="@Model.PatientId" /></td></tr>
+                    <tr>
+
+                        <td style="width:150px">
+                            <label style="color:darkslateblue">Patient Name<span style="color:red">*</span></label>
+                        </td>
+                        <td>
+                            <input type="text" id="PatientName" name="PatientName" class="TextBox" required value="@Model.PatientName">
+                        </td>
+                    </tr>
+                    <tr>
+
+                        <td style="width:150px">
+                            <label style="color:darkslateblue">Patient Address<span style="color:red">*</span></label>
+                        </td>
+                        <td>
+                            <input type="text" id="Address" name="Address" class="TextBox" required value="@Model.Address">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label style="color:darkslateblue">Blood Group<span style="color:red">*</span></label></td>
+                        <td>
+
+                            <select id="BloodGroupId" name="BloodGroupId" style="width:238px;height:35px">
+                                <option value="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--Select--</option>
+                                @{
+
+                                    if (Model.BloodGroupId != "" && Model.BloodGroupId != null)
+                                    {
+                                        if (Model.BloodGroupId == "AP") { Model.BloodGroupName = "A+"; }
+                                        if (Model.BloodGroupId == "AN") { Model.BloodGroupName = "A-"; }
+                                        if (Model.BloodGroupId == "BP") { Model.BloodGroupName = "B+"; }
+                                        if (Model.BloodGroupId == "BN") { Model.BloodGroupName = "B-"; }
+                                        if (Model.BloodGroupId == "OP") { Model.BloodGroupName = "O+"; }
+                                        if (Model.BloodGroupId == "ON") { Model.BloodGroupName = "O-"; }
+                                        if (Model.BloodGroupId == "ABP") { Model.BloodGroupName = "AB+"; }
+                                        if (Model.BloodGroupId == "ABN") { Model.BloodGroupName = "AB-"; }
+                                        <option value="@Model.BloodGroupId" selected>@Model.BloodGroupName</option>
+                                    }
+
+                                    <option value="AP">A+</option>
+                                    <option value="AN">A-</option>
+                                    <option value="BP">B+</option>
+                                    <option value="BN">B-</option>
+                                    <option value="OP">O+</option>
+                                    <option value="ON">O-</option>
+                                    <option value="ABP">AB+</option>
+                                    <option value="ABN">AB-</option>
+
+
+                                }
+
+                            </select>
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <td style="width:80px">
+                            <label style="color:darkslateblue">Age<span style="color:red">*</span></label>
+                        </td>
+                        <td>
+                            <input type="number" id="Email" name="Age" style="width:238px;height:35px" required value="@Model.Age">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label style="color:darkslateblue">Gender<span style="color:red">*</span></label></td>
+                        <td>
+
+                            <select id="GenderId" name="GenderId" style="width:238px;height:35px">
+                                <option value="0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--Select--</option>
+                                @{
+
+                                    if (Model.GenderId != 0)
+                                    {
+                                        if (Model.GenderId == 1) { Model.GenderName = "Male"; }
+                                        if (Model.GenderId == 2) { Model.GenderName = "Female"; }
+                                        if (Model.GenderId == 3) { Model.GenderName = "Transgender"; }
+
+                                        <option value="@Model.GenderId" selected>@Model.GenderName</option>
+
+                                    }
+                                    <option value="1">Male</option>
+                                    <option value="2">Female</option>
+                                    <option value="3">Transgender</option>
+
+                                }
+
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+
+                        <td style="width:150px">
+                            <label style="color:darkslateblue">Prescribtion Image<span style="color:red">*</span></label>
+                        </td>
+                        <td>
+                            <input type="file" class="form-control" name="Prescribtion" value="@Model.Prescribtion" id="FileName" />
+
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td style="width:80px"></td>
+                        <td></td>
+                        <td><button type="submit" class="btn btn-primary m-t-15 waves-effect" style="width:100px" onclick="javascript:return validateForm()">Save</button></td>
+                    </tr>
+                </table>
+            </form>
+
+        </div>
+    </div>
+    <div><br /></div>
+
+    <H3 align="center">Registersed Patient Details</H3>
+
+    <table align="center" cellspacing="0" border="1" id="ctl00_ContentPlaceHolder1_dgvBlock" style="border-color:#FFFFFF;border-width:0px;border-style:Solid;width:80%;border-collapse:collapse;">
+        <tr style="background-color:#1E90FF;border-color:#1E90FF;">
+            <th style="color:#FFFFFF;font-family: Verdana, Arial, Helvetica, sans-serif;border-right-color:#FFFFFF;">Patient  Name</th>
+            <th style="color:#FFFFFF;font-family: Verdana, Arial, Helvetica, sans-serif;border-right-color:#FFFFFF;">Address</th>
+            <th style="color:#FFFFFF;font-family: Verdana, Arial, Helvetica, sans-serif;border-right-color:#FFFFFF;">Age</th>
+            <th style="color:#FFFFFF;font-family: Verdana, Arial, Helvetica, sans-serif;border-right-color:#FFFFFF;">Blood Group</th>
+            <th style="color:#FFFFFF;font-family: Verdana, Arial, Helvetica, sans-serif;border-right-color:#FFFFFF;">Gender</th>
+            <th style="color:#FFFFFF;font-family: Verdana, Arial, Helvetica, sans-serif;border-right-color:#FFFFFF;">Prescribtion</th>
+            <th style="color:#FFFFFF;font-family: Verdana, Arial, Helvetica, sans-serif;border-left-color:#FFFFFF;border-right-color:#FFFFFF;">Action</th>
+            <th style="color:#FFFFFF;font-family: Verdana, Arial, Helvetica, sans-serif;border-left-color:#FFFFFF;">Action</th>
+            
+        </tr>
+        @{
+            if (Model.Dt != null)
+            {
+                foreach (DataRow dr in Model.Dt.Rows)
+                {
+                    <tr style="background-color:#FFFFFF;border-color:#1E90FF;">
+                        <td style="border-right-color:#1E90FF"> @dr["PatientName"].ToString()</td>
+                        <td style="border-right-color:#1E90FF"> @dr["Address"].ToString()</td>
+                        <td style="border-right-color:#1E90FF"> @dr["Age"].ToString()</td>
+                        <td style="border-right-color:#1E90FF"> @dr["BloodGroup"].ToString()</td>
+                        <td style="border-right-color:#1E90FF"> @dr["GenderId"].ToString()</td>
+                        <td style="border-right-color:#1E90FF"><a href="~/@dr["Prescribtion"].ToString()">show</a> </td>
+                        <td align="center" style="width:20px;border-left-color:#1E90FF;border-right-color:#1E90FF"><a href="~/General/Booking/@dr["PatientId"]">Request</a> </td>
+                        <td align="center" style="width:20px;border-left-color:#1E90FF;border-right-color:#1E90FF"><a href="~/General/DeletePatient/@dr["PatientId"]">Delete</a></td>
+                            
+                    </tr>
+                }
+            }
+        }
+    
+
+    <tr style="border-left-color:#1E90FF;border-right-color:#1E90FF;border-bottom-color:#1E90FF"><td style="border-right-color:#FFFFFF;border-left-color:#FFFFFF;">&nbsp;&nbsp;</td><td style="border-right-color:#FFFFFF">&nbsp;&nbsp;</td><td style="border-right-color:#FFFFFF">&nbsp;&nbsp;</td><td style="border-right-color:#FFFFFF">&nbsp;&nbsp;</td><td style="border-right-color:#FFFFFF">&nbsp;&nbsp;</td><td style="border-right-color:#FFFFFF">&nbsp;&nbsp;</td><td style="border-right-color:#FFFFFF">&nbsp;&nbsp;</td><td style="border-right-color:#FFFFFF">&nbsp;&nbsp;</td><td style="border-right-color:#FFFFFF">&nbsp;&nbsp;</td><td style="border-right-color:#FFFFFF">&nbsp;&nbsp;</td><td style="width:80px;border-left-color:#FFFFFF;border-right-color:#FFFFFF">&nbsp;&nbsp;</td><td style="width:80px;border-left-color:#FFFFFF;border-right-color:#FFFFFF;">&nbsp;&nbsp;</td></tr>
+
+</table>
+</body>
+</html>

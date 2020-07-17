@@ -1,0 +1,33 @@
+﻿
+@{
+    ViewBag.Title = "AdminDashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Admin Dashboard</h2>
+
+@{
+    if ((Convert.ToInt32(Session["HospitalId"]) == 0 && Convert.ToInt32(Session["BloodBank"]) == 0))
+    {
+        <a href="~/BloodBank/Registration"><b>Blood Bank Details</b></a><br />
+
+
+        <a href="~/Hospital/Registration"><b>Hospital Details</b></a><br />
+
+
+        <a href="~/Home/District"><b>District Master Details</b></a><br />
+
+
+        <a href="~/General/HospitalMemberDetails"><b>Hospital Member Details</b></a><br />
+
+
+
+        <a href="~/General/BloodBankMemberDetails"><b>Blood Bank Member Details</b></a><br />
+
+
+        <a href="~/General/GeneralUserDetails"><b>General User Details</b></a><br />
+
+        
+        <a href="~/General/EditPersonalInfo/@Convert.ToInt32(Session["UserId"])"><b>Edit Personal Info</b></a><br />
+    }
+}

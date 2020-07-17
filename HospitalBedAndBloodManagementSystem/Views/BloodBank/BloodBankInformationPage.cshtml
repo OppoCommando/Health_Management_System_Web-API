@@ -1,0 +1,118 @@
+﻿@using System.Data;
+@using HospitalBedAndBloodManagementSystem.Models;
+@model HospitalBedAndBloodManagementSystem.Models.BloodBankInfoModel
+
+@{
+    ViewBag.Title = "BloodBankInformationPage";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+    <script>
+    function validateForm() {
+        var x = document.getElementById("BloodBankId").value;
+        if (x == 0) {
+            alert("please select Blood Bank");
+            return false;
+        }
+
+    }
+    </script>
+<style>
+    .TextBox {
+        width: 341px;
+        height: 35px
+    }
+</style>
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>BloodBankInformationPage</title>
+</head>
+<body>
+    <h2 style="text-align:center;color:mediumspringgreen">Blood Bank's Blood Informations </h2>
+    <div>
+    </div>
+    <div style="background-color:white">
+        <form action="~/BloodBank/SaveBloodInfo" method="POST">
+            <table border="0" align="center" class="tblclass">
+                <tr><td></td><td><label id="Msg" style="color:green">@Model.Msg</label><br /></td></tr>
+                <tr><td><input type="hidden"  name="BloodInfoId" value="@Model.BloodInfoId" /></td></tr>
+                <tr>
+                    <td><label style="color:darkslateblue">Blood Bank<span style="color:red">*</span></label></td>
+                    <td>
+
+                        <select id="BloodBankId" name="BloodBankId" style="width:180px;height:35px" required>
+                            <option value="0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--Select--</option>
+                            @{
+                                foreach (BloodBankInfoModel b in Model.bloodBanks)
+                                {
+                                    if (b.BloodBankId == Model.BloodBankId)
+                                    {
+                                        <option value="@b.BloodBankId" selected>@b.BloodBank</option>
+                                        continue;
+                                    }
+                                    @*<option value="@b.BloodBankId">@b.BloodBank</option>*@
+                                }
+                            }
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <br />
+                    </td>
+                </tr>
+                <tr>
+                    <td style="color:slateblue"><b>Blood Group</b></td>
+
+                    <td style="color:green"><b>&nbsp;&nbsp;Quantity</b></td>
+                </tr>
+                <tr>
+                    <td style="color:red">[A+]</td>
+                    <td><input type="number" id="AP" name="AP" value="@Model.AP" /> </td>
+                </tr>
+                <tr>
+                    <td style="color:red">[A-]</td>
+                    <td><input type="number" id="AN" name="AN" value="@Model.AN" /> </td>
+                </tr>
+                <tr>
+                    <td style="color:red">[B+]</td>
+                    <td><input type="number" id="BP" name="BP" value="@Model.BP" /> </td>
+                </tr>
+                <tr>
+                    <td style="color:red">[B-]</td>
+                    <td><input type="number" id="BN" name="BN" value="@Model.BN" /> </td>
+                </tr>
+                <tr>
+                    <td style="color:red">[AB+]</td>
+                    <td><input type="number" id="ABP" name="ABP" value="@Model.ABP" /> </td>
+                </tr>
+                <tr>
+                    <td style="color:red">[AB-]</td>
+                    <td><input type="number" id="ABN" name="ABN" value="@Model.ABN" /> </td>
+                </tr>
+                <tr>
+                    <td style="color:red">[O+]</td>
+                    <td><input type="number" id="OP" name="OP" value="@Model.OP" /> </td>
+                </tr>
+                <tr>
+                    <td style="color:red">[O-]</td>
+                    <td><input type="number" id="ON" name="ON" value="@Model.ON" /> </td>
+                </tr>
+                <tr>
+                    <td><br /></td>
+                </tr>
+                <tr>
+                    <td></td>
+
+                    <td><button type="submit" class="btn btn-primary m-t-15 waves-effect" style="width:100px" onclick="javascript:return validateForm()">Save</button></td>
+
+                </tr>
+
+            </table>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,35 @@
+﻿
+@{
+    ViewBag.Title = "HospitalMemberDashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Hospital Member Dashboard</h2>
+<h1>welcome @this.User.Identity.Name.Split(',')[1]</h1>
+
+@{
+    if (this.User.IsInRole("1"))
+    {
+        <p1> You are an ADMIN</p1><br />
+
+        <a href="~/General/HospitalMemberDetails"><b>Hospital Member Details</b></a><br />
+
+    }
+    else
+    {
+        <p1> You are a Hospital Member</p1><br />
+    }
+}
+<br />
+@{
+    if ((Convert.ToInt32(Session["HospitalId"]) != 0 && Convert.ToInt32(Session["BloodBankId"]) == 0))
+    {
+        <a href="~/Hospital/BedInfo"><b>Hospital Bed Information </b></a><br />
+
+
+        <a href="~/Booking/GetBedBookingRequest/@Convert.ToInt32(Session["HospitalId"]) "><b>Show Bed Requests</b></a><br />
+
+        <a href="~/General/EditPersonalInfo/@Convert.ToInt32(Session["UserId"])"><b>Edit Personal Info</b></a><br />
+
+    }
+}

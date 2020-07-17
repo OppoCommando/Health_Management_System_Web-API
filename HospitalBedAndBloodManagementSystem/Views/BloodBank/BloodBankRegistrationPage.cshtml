@@ -1,0 +1,215 @@
+﻿@model HospitalBedAndBloodManagementSystem.Models.BloodBankViewModel
+@using HospitalBedAndBloodManagementSystem.Models
+@using System.Data;
+@{
+    ViewBag.Title = "BloodBankRegistrationPage";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .TextBox {
+        width: 341px;
+        height: 35px
+    }
+</style>
+<script>
+    function validateForm() {
+        var x = document.getElementById("BloodBank").value;
+        var y = document.getElementById("BloodBankTypeId").value;
+        var z = document.getElementById("DistrictId").value;
+        if (x == "") {
+            alert(" Blood Bank Name must be filled out");
+            return false;
+        }
+        if (y == 0) {
+            alert("please select Blood Bank Type");
+            return false;
+        }
+        if (z == 0) {
+            alert("please select District");
+            return false;
+            }
+
+        }
+</script>
+
+<!DOCTYPE html>
+<html>
+<body>
+    <div style="background-color:cornflowerblue">
+        <h3 style="color:white;text-align:center;text-shadow:inherit">Blood Bank Registration Page</h3>
+        <div></div>
+        <div style="background-color:white">
+            <form action="~/BloodBank/Save" method="POST">
+                <table border="0" align="center" class="tblclass">
+                    <tr><td></td><td><label id="Msg" style="color:coral">@Model.Msg</label><br /></td></tr>
+                    <tr><td><input type="hidden" name="BloodBankId" value="@Model.BloodBankId" /></td></tr>
+                    <tr>
+
+                        <td style="width:150px">
+                            <label style="color:darkslateblue">Blood Bank Name <span style="color:red">*</span></label>
+                        </td>
+                        <td>
+                            <input type="text" id="BloodBank" name="BloodBank" class="TextBox" value="@Model.BloodBank">
+                        </td>
+                    </tr>
+                    <tr><td></td></tr>
+                    <tr>
+                        <td style="width:80px"><label style="color:darkslateblue">Address:<span style="color:red">*</span></label></td>
+                        <td><input type="text" id="Address" name="Address" style="width:341px;height:35px" placeholder="Street No./Building No." required value="@Model.Address"></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>
+                            <label style="color:darkslateblue">District<span style="color:red">*</span></label>
+                            <select id="DistrictId" name="DistrictId" style="width:181px;height:35px" required>
+                                <option value="0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--Select--</option>
+                                @{
+                                    foreach (District d in Model.districts)
+                                    {
+                                        if (d.DistrictId == Model.DistrictId)
+                                        {
+                                            <option value="@d.DistrictId" selected>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@d.DistrictName</option>
+                                            continue;
+                                        }
+                                        <option value="@d.DistrictId">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@d.DistrictName</option>
+                                    }
+                                }
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width:80px"></td>
+                        <td>
+                            <label style="color:darkslateblue">City<span style="color:red">*</span></label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <input type="text" id="cityName" name="City" style="width:174px;height:35px" required value="@Model.City">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width:80px"></td>
+                        <td>
+                            <label style="color:darkslateblue">Pin Code<span style="color:red">*</span></label>
+                            <input type="text" id="Pincode" name="Pincode" style="width:164px;height:35px" required value="@Model.Pincode">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>
+                            <label style="color:darkslateblue">Blood Bank Type<span style="color:red">*</span></label>
+                            <select id="BloodBankTypeId" name="BloodBankTypeId" style="width:108px;height:35px">
+                                <option value="0">&nbsp;&nbsp;--Select--</option>
+                                @{
+
+                                    if (Model.BloodBankTypeId != 0)
+                                    {
+                                        if (Model.BloodBankTypeId == 1) { Model.BloodBankTypeName = "Govt."; }
+                                        if (Model.BloodBankTypeId == 2) { Model.BloodBankTypeName = "Private"; }
+                                        <option value="@Model.BloodBankTypeId" selected>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@Model.BloodBankTypeName</option>
+
+                                    }
+                                    <option value="1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Govt.</option>
+                                    <option value="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Private</option>
+                                }
+
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width:80px">
+                            <label style="color:darkslateblue">Reg: No<span style="color:red">*</span></label>
+                        </td>
+                        <td>
+                            <input type="text" id="RegNo" name="RegistrationNo" style="width:238px;height:35px" required value="@Model.RegistrationNo">
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td style="width:80px">
+                            <label style="color:darkslateblue">Contact No<span style="color:red">*</span></label>
+                        </td>
+                        <td>
+                            <input type="text" id="Contact" name="ContactNo" onkeypress="return event.charCode >= 48 && event.charCode <=57" style="width:238px;height:35px" maxlength="10" required value="@Model.ContactNo" maxlength="10" min="10">
+                        </td>
+                    <tr>
+                        <td style="width:80px">
+                            <label style="color:darkslateblue">LandLine No</label>
+                        </td>
+                        <td>
+                            <input type="text" id="LandLine" name="LandLineNo" maxlength="11" onkeypress="return event.charCode >= 48 && event.charCode <=57" style="width:238px;height:35px" value="@Model.LandLineNo">
+                        </td>
+                    <tr>
+                        <td style="width:80px">
+                            <label style="color:darkslateblue">Email<span style="color:red">*</span></label>
+                        </td>
+                        <td>
+                            <input type="Email" id="Email" name="EmailID" style="width:238px;height:35px" required value="@Model.EmailID">
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <td style="width:80px"></td>
+                        <td></td>
+                        <td><button type="submit" class="btn btn-primary m-t-15 waves-effect" style="width:100px" onclick="javascript:return validateForm()">Save</button></td>
+                    </tr>
+                </table>
+            </form>
+
+        </div>
+    </div>
+    <div><br /></div>
+    <H3 align="center">Blood Bank Details</H3>
+
+    <table align="center" cellspacing="0" border="1" id="ctl00_ContentPlaceHolder1_dgvBlock" style="border-color:#FFFFFF;border-width:0px;border-style:Solid;width:80%;border-collapse:collapse;">
+        <tr style="background-color:#1E90FF;border-color:#1E90FF;">
+            <th style="color:#FFFFFF;font-family: Verdana, Arial, Helvetica, sans-serif;border-right-color:#FFFFFF;">Blood Bank  Name</th>
+            <th style="color:#FFFFFF;font-family: Verdana, Arial, Helvetica, sans-serif;border-right-color:#FFFFFF;">Reg: No</th>
+            <th style="color:#FFFFFF;font-family: Verdana, Arial, Helvetica, sans-serif;border-right-color:#FFFFFF;">Type</th>
+            <th style="color:#FFFFFF;font-family: Verdana, Arial, Helvetica, sans-serif;border-right-color:#FFFFFF;">Address</th>
+            <th style="color:#FFFFFF;font-family: Verdana, Arial, Helvetica, sans-serif;border-right-color:#FFFFFF;">Disrtict</th>
+            <th style="color:#FFFFFF;font-family: Verdana, Arial, Helvetica, sans-serif;border-right-color:#FFFFFF;">City</th>
+            <th style="color:#FFFFFF;font-family: Verdana, Arial, Helvetica, sans-serif;border-right-color:#FFFFFF;">Pincode</th>
+            <th style="color:#FFFFFF;font-family: Verdana, Arial, Helvetica, sans-serif;border-right-color:#FFFFFF;">ContactNo</th>
+            <th style="color:#FFFFFF;font-family: Verdana, Arial, Helvetica, sans-serif;border-right-color:#FFFFFF;">LandLineNo</th>
+            <th style="color:#FFFFFF;font-family: Verdana, Arial, Helvetica, sans-serif;border-right-color:#FFFFFF;">EmailID</th>
+            <th style="color:#FFFFFF;font-family: Verdana, Arial, Helvetica, sans-serif;border-left-color:#FFFFFF;border-right-color:#FFFFFF;">Action</th>
+                @{if (this.User.IsInRole("1"))
+                {
+                    <th style="color:#FFFFFF;font-family: Verdana, Arial, Helvetica, sans-serif;border-left-color:#FFFFFF;">Action</th>
+                    }
+                }
+                </tr>
+        @{
+            if (Model.Dt != null)
+            {
+                foreach (DataRow dr in Model.Dt.Rows)
+                {
+                <tr style="background-color:#FFFFFF;border-color:#1E90FF;">
+                    <td style="border-right-color:#1E90FF"> @dr["BloodBankName"].ToString()</td>
+                    <td style="border-right-color:#1E90FF"> @dr["RegistrationNo"].ToString()</td>
+                    <td style="border-right-color:#1E90FF"> @dr["BloodBankTypeName"].ToString()</td>
+                    <td style="border-right-color:#1E90FF"> @dr["Address"].ToString()</td>
+                    <td style="border-right-color:#1E90FF"> @dr["DistrictName"].ToString()</td>
+                    <td style="border-right-color:#1E90FF"> @dr["City"].ToString()</td>
+                    <td style="border-right-color:#1E90FF"> @dr["Pin"].ToString()</td>
+                    <td style="border-right-color:#1E90FF"> @dr["ContactNo"].ToString()</td>
+                    <td style="border-right-color:#1E90FF"> @dr["LandLineNo"].ToString()</td>
+                    <td style="border-right-color:#1E90FF"> @dr["Email"].ToString()</td>
+                    <td align="center" style="width:20px;border-left-color:#1E90FF;border-right-color:#1E90FF"><a href="~/BloodBank/EditBloodBank/@dr["BloodBankId"]">Edit</a> </td>
+                        @{if (this.User.IsInRole("1"))
+                        {
+                            <td align="center" style="width:20px;border-left-color:#1E90FF;border-right-color:#1E90FF"><a href="~/BloodBank/DeleteBloodBank/@dr["BloodBankId"]">Delete </a></td>
+                            }
+                        }
+                        </tr>
+                }
+            }
+        }
+
+        <tr style="border-left-color:#1E90FF;border-right-color:#1E90FF;border-bottom-color:#1E90FF"><td style="border-right-color:#FFFFFF;border-left-color:#FFFFFF;">&nbsp;&nbsp;</td><td style="border-right-color:#FFFFFF">&nbsp;&nbsp;</td><td style="border-right-color:#FFFFFF">&nbsp;&nbsp;</td><td style="border-right-color:#FFFFFF">&nbsp;&nbsp;</td><td style="border-right-color:#FFFFFF">&nbsp;&nbsp;</td><td style="border-right-color:#FFFFFF">&nbsp;&nbsp;</td><td style="border-right-color:#FFFFFF">&nbsp;&nbsp;</td><td style="border-right-color:#FFFFFF">&nbsp;&nbsp;</td><td style="border-right-color:#FFFFFF">&nbsp;&nbsp;</td><td style="border-right-color:#FFFFFF">&nbsp;&nbsp;</td><td style="width:80px;border-left-color:#FFFFFF;border-right-color:#FFFFFF">&nbsp;&nbsp;</td><td style="width:80px;border-left-color:#FFFFFF;border-right-color:#FFFFFF;">&nbsp;&nbsp;</td></tr>
+
+    </table>
+
+</body>
+</html>
+

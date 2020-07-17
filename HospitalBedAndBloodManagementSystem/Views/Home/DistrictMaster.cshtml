@@ -1,0 +1,94 @@
+﻿@using System.Data;
+@using HospitalBedAndBloodManagementSystem.Models;
+@model HospitalBedAndBloodManagementSystem.Models.District
+@{
+    ViewBag.Title = "DistrictMaster";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .TextBox {
+        width: 341px;
+        height: 35px
+    }
+</style>
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>District Master</title>
+</head>
+<body>
+    <div style="background-color:cornflowerblue">
+        <h3 style="color:white;text-align:center;text-shadow:inherit">District Master</h3>
+        <div></div>
+        <div style="background-color:white">
+            <form action="~/Home/Save" method="POST">
+                <table border="0" align="center" class="tblclass">
+                    <tr><td></td><td><label id="Msg" style="color:coral">@Model.Msg</label><br /></td></tr>
+                    <tr><td><input type="hidden" name="DistrictId" value="@Model.DistrictId" /></td></tr>
+                    <tr>
+                        <td style="width:150px">
+                            <label style="color:darkslateblue">District Name <span style="color:red">*</span></label>
+                        </td>
+                        <td>
+                            <input type="text" id="Name" name="DistrictName" class="TextBox" value="@Model.DistrictName" required>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td style="width:80px"></td>
+                        <td></td>
+                        <td><button type="submit"  class="btn btn-primary m-t-15 waves-effect" style="width:100px">Save</button></td>
+                    </tr>
+                </table>
+            </form>
+
+        </div>
+    </div>
+    <div><br /></div>
+
+
+    <H3 align="center">District List</H3>
+
+    <table align="center" cellspacing="0" border="1" id="ctl00_ContentPlaceHolder1_dgvBlock" style="border-color:#FFFFFF;border-width:0px;border-style:Solid;width:80%;border-collapse:collapse;">
+        <tr style="background-color:#1E90FF;border-left-color:#1E90FF;border-right-color:#1E90FF">
+            <th style="color:#FFFFFF;font-family: Verdana, Arial, Helvetica, sans-serif;border-right-color:#FFFFFF;">District</th>
+            <th style="color:#FFFFFF;font-family: Verdana, Arial, Helvetica, sans-serif;border-left-color:#FFFFFF;border-right-color:#FFFFFF;">Action</th>
+                @{if (this.User.IsInRole("1") && (Convert.ToInt32(Session["HospitalId"])==0) && (Convert.ToInt32(Session["BloodBankId"])==0))
+                {
+                    <th style="color:#FFFFFF;font-family: Verdana, Arial, Helvetica, sans-serif;border-left-color:#FFFFFF;">Action</th>
+                    }
+                }
+                </tr>
+        @{
+            if (Model.Dt != null)
+            {
+                foreach (DataRow dr in Model.Dt.Rows)
+                {
+                <tr style="background-color:#FFFFFF;border-color:#1E90FF;">
+                    <td style="border-right-color:#1E90FF"> @dr["DistrictName"].ToString()</td>
+                    <td align="center" style="width:20px;border-left-color:#1E90FF;border-right-color:#1E90FF"><a href="~/Home/EditDistrict/@dr["DistrictId"]">Edit</a> </td>
+                    @{if (this.User.IsInRole("1") && (Convert.ToInt32(Session["HospitalId"])==0) && (Convert.ToInt32(Session["BloodBankId"])==0))
+                        {
+                            <td align="center" style="width:20px;border-left-color:#1E90FF;border-right-color:#1E90FF"><a href="~/Home/DeleteDistrict/@dr["DistrictId"]">Delete </a></td>
+                        }
+                    }
+                </tr>
+                }
+            }
+        }
+
+        <tr style="border-left-color:#FFFFFF;border-right-color:#FFFFFF;border-bottom-color:#1E90FF"><td style="border-right-color:#FFFFFF">&nbsp;&nbsp;</td><td style="width:80px;border-left-color:#FFFFFF;border-right-color:#FFFFFF">&nbsp;&nbsp;</td><td style="width:80px;border-left-color:#FFFFFF;">&nbsp;&nbsp;</td></tr>
+
+    </table>
+
+</body>
+</html>
+
+
+
+
+

@@ -1,0 +1,21 @@
+﻿
+@{
+    ViewBag.Title = "GeneralUserDashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>General User Dashboard</h2>
+<h1>welcome @this.User.Identity.Name.Split(',')[1]</h1>
+
+
+
+<a href="~/General/PatientRegistration/1"><b>Request for book Blood</b></a><br />
+
+
+<a href="~/General/PatientRegistration/2"><b>Request for book Bed</b></a><br />
+
+
+<a href="~/Booking/BookStatus"><b>Check your booking  request status</b></a><br />
+
+
+<a href="~/General/EditPersonalInfo/@Convert.ToInt32(Session["UserId"])"><b>Edit Personal Info</b></a><br />

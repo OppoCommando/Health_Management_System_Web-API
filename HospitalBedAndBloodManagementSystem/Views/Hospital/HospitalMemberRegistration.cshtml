@@ -1,0 +1,238 @@
+﻿@using System.Data;
+@using HospitalBedAndBloodManagementSystem.Models;
+@model HospitalBedAndBloodManagementSystem.Models.GeneralViewModel
+@{
+    ViewBag.Title = "HospitalMemberRegestration";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .TextBox {
+        width: 341px;
+        height: 35px
+    }
+</style>
+<script>
+    function validateForm() {
+        var x = document.getElementById("Password").value;
+        var y = document.getElementById("ConfirmPassword").value;
+        var z = document.getElementById("DistrictId").value;
+       
+        if (x == 0) {
+            alert("please Enter Password");
+            return false;
+        }
+        if (y == 0) {
+            alert("please Enter Confirm Password");
+            return false;
+        }
+
+        if (x != y) {
+            alert("Please Enter same Password in Confirm Password");
+            return false;
+        }
+        if (z == 0) {
+            alert("please select District");
+            return false;
+        }
+       
+
+    }
+</script>
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>HospitalMemberRegistration</title>
+</head>
+<body>
+    <div style="background-color:cornflowerblue">
+        <h3 style="color:white;text-align:center;text-shadow:inherit">Hospital Member Registration Page</h3>
+        <div></div>
+        <div style="background-color:white">
+            <form action="~/Hospital/SaveRegistration" method="POST">
+                <table border="0" align="center" class="tblclass">
+                    <tr><td></td><td><label id="Msg" style="color:coral">@Model.Msg</label><br /></td></tr>
+                    <tr><td></td><td><input type="hidden" value="@Model.UserId" name="UserId" /></td></tr>
+                    <tr>
+                        <td><label style="color:darkslateblue">Hospital<span style="color:red">*</span></label></td>
+                        <td>
+
+                            <select id="HospitalId" name="HospitalId" style="width:180px;height:35px" required>
+                                <option value="0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--Select--</option>
+                                @{
+                                    foreach (HospitalViewModel h in Model.hospitals)
+                                    {
+                                        if (h.HospitalId == Model.HospitalId)
+                                        {
+                                            <option value="@h.HospitalId" selected>@h.Hospital</option>
+                                            continue;
+                                        }
+                                        <option value="@h.HospitalId">@h.Hospital</option>
+                                    }
+                                }
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+
+                        <td style="width:150px">
+                            <label style="color:darkslateblue">Name <span style="color:red">*</span></label>
+                        </td>
+                        <td>
+                            <input type="text" id="Name" name="GeneralUser" class="TextBox" required value="@Model.GeneralUser">
+                        </td>
+                    </tr>
+                    <tr><td></td></tr>
+                    <tr>
+                        <td style="width:80px"><label style="color:darkslateblue">Address:<span style="color:red">*</span></label></td>
+                        <td><input type="text" id="Address" name="Address" style="width:341px;height:35px" required value="@Model.Address"></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>
+                            <label style="color:darkslateblue">District<span style="color:red">*</span></label>
+                            <select id="DistrictId" name="DistrictId" style="width:180px;height:35px" required>
+                                <option value="0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--Select--</option>
+                                @{
+                                    foreach (District d in Model.districts)
+                                    {
+                                        if (d.DistrictId == Model.DistrictId)
+                                        {
+                                            <option value="@d.DistrictId" selected>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@d.DistrictName</option>
+                                            continue;
+                                        }
+                                        <option value="@d.DistrictId">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@d.DistrictName</option>
+                                    }
+                                }
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width:80px"></td>
+                        <td>
+                            <label style="color:darkslateblue">City<span style="color:red">*</span></label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <input type="text" id="cityName" name="City" style="width:178px;height:35px" required value="@Model.City">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width:80px"></td>
+                        <td>
+                            <label style="color:darkslateblue">Pin Code<span style="color:red">*</span></label>
+                            <input type="text" id="Pincode" name="Pincode" style="width:164px;height:35px" required value="@Model.Pincode">
+                        </td>
+                    </tr>
+                    @*<tr>
+                        <td> <label style="color:darkslateblue">User Type<span style="color:red">*</span></label></td>
+                        <td>
+
+                            <select id="UserTypeId" name="UserTypeId" style="width:238px;height:35px">
+                                <option value="0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--Select--</option>
+                                @{
+
+                                    if (Model.UserTypeId != 0)
+                                    {
+                                        if (Model.UserTypeId == 1) { Model.UserTypeName = "ADMIN"; }
+                                        if (Model.UserTypeId == 2) { Model.UserTypeName = "General User"; }
+                                        if (Model.UserTypeId == 3) { Model.UserTypeName = "Hospital Member"; }
+                                        if (Model.UserTypeId == 4) { Model.UserTypeName = "Blood Bank Member"; }
+                                        <option value="@Model.UserTypeId" selected>@Model.UserTypeName</option>
+
+                                    }
+                                    @*<option value="1">ADMIN</option>
+                                    <option value="2">General User</option>
+                                    <option value="3">Hospital Member</option>
+                                    <option value="4">Blood Bank Member</option>
+                                }
+
+                            </select>
+                        </td>
+                    </tr>*@
+                    <tr>
+                        <td style="width:80px">
+                            <label style="color:darkslateblue">Contact No<span style="color:red">*</span></label>
+                        </td>
+                        <td>
+                            <input type="text" id="Contact" name="ContactNo"  onkeypress="return event.charCode >= 48 && event.charCode <=57" style="width:238px;height:35px"  maxlength="10" required value="@Model.ContactNo">
+                        </td>
+
+                    <tr>
+                        <td style="width:80px">
+                            <label style="color:darkslateblue">Email<span style="color:red">*</span></label>
+                        </td>
+                        <td>
+                            <input type="Email" id="Email" name="EmailID" style="width:238px;height:35px" required value="@Model.EmailID">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label style="color:darkslateblue">Gender<span style="color:red">*</span></label></td>
+                        <td>
+
+                            <select id="GenderId" name="GenderId" style="width:238px;height:35px">
+                                <option value="0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--Select--</option>
+                                @{
+
+                                    if (Model.GenderId != 0)
+                                    {
+                                        if (Model.GenderId == 1) { Model.GenderName = "Male"; }
+                                        if (Model.GenderId == 2) { Model.GenderName = "Female"; }
+                                        if (Model.GenderId == 3) { Model.GenderName = "Transgender"; }
+
+                                        <option value="@Model.GenderId" selected>@Model.GenderName</option>
+
+                                    }
+                                    <option value="1">Male</option>
+                                    <option value="2">Female</option>
+                                    <option value="3">Transgender</option>
+
+                                }
+
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width:80px">
+                            <label style="color:darkslateblue">Date Of Birth<span style="color:red">*</span></label>
+                        </td>
+                        <td>
+                            <input type="date" id="DOB" name="DOB" style="width:238px;height:35px" required value="@Model.DOB">
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td style="width:80px">
+                            <label style="color:darkslateblue">Set UserName<span style="color:red">*</span></label>
+                        </td>
+                        <td>
+                            <input type="text" id="UserName" name="UserName" style="width:238px;height:35px" required value="@Model.UserName">
+                        </td>
+                    <tr>
+                        <td style="width:80px">
+                            <label style="color:darkslateblue">Set Password<span style="color:red">*</span></label>
+                        </td>
+                        <td>
+                            <input type="password" id="Password" name="Password" style="width:238px;height:35px" required value="@Model.Password">
+                        </td>
+                    <tr>
+                        <td style="width:80px">
+                            <label style="color:darkslateblue">Confirm Password<span style="color:red">*</span></label>
+                        </td>
+                        <td>
+                            <input type="password" id="ConfirmPassword" name="ConfirmPassword" style="width:238px;height:35px" required>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width:80px"></td>
+                        <td></td>
+                        <td><button type="submit" class="btn btn-primary m-t-15 waves-effect" style="width:100px" onclick="javascript:return validateForm()">Save</button></td>
+                    </tr>
+                </table>
+            </form>
+
+        </div>
+    </div>
+    <div><br /></div>
+</body>
+</html>
