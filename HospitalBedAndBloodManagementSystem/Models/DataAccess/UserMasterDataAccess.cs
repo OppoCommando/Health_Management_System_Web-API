@@ -129,6 +129,38 @@ namespace HospitalBedAndBloodManagementSystem.Models.DataAccess
             
         }
 
+        internal static UserMasterViewModel UserMaster_Register(UserMasterViewModel userObj)
+        {
+            UserMasterViewModel userResponse = new UserMasterViewModel();
+            using (DataManager oDM = new DataManager())
+            {
+
+                oDM.Add("@pUserName", SqlDbType.VarChar, 50, userObj.UserName);
+
+                oDM.Add("@pUserPhoneNumber", SqlDbType.VarChar, 20, userObj.UserPhoneNumber);
+
+                oDM.Add("@pUserPassword", SqlDbType.Int, userObj.UserPassword);
+
+
+
+
+                oDM.CommandType = CommandType.StoredProcedure;
+
+                SqlDataReader dr = oDM.ExecuteReader("App_Authenticate_Login");
+                if (dr.HasRows)
+                {
+                    while (dr.Read())
+                    {
+                        userResponse.Msg = (dr["Msg"] == DBNull.Value) ? "" : dr["Msg"].ToString();
+                        userResponse.UserId = (dr["UserId"] == DBNull.Value) ? 0 : int.Parse(dr["UserId"].ToString());                        
+
+                    }
+                }
+            }
+
+            return userResponse;
+        }
+
         internal static UserMasterViewModel Login(string userName, string password,int UserType)
         {
 

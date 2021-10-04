@@ -39,5 +39,8 @@ namespace HospitalBedAndBloodManagementSystem.Models.ViewModels
         public string DeviceId { get; set; }
 
         public int Role { get; set; }
+        public string UserPhoneNumber { get; set; }
+        public string UserPassword { get; set; }
+        
     }
 }

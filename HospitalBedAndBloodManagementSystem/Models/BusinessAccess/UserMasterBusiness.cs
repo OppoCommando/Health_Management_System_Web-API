@@ -17,5 +17,10 @@ namespace HospitalBedAndBloodManagementSystem.Models.BusinessAccess
         {
             return DataAccess.UserMasterDataAccess.Login(userName, password, UserType);
         }
+
+        internal UserMasterViewModel UserMaster_Register(UserMasterViewModel userObj)
+        {
+            return DataAccess.UserMasterDataAccess.UserMaster_Register(userObj);
+        }
     }
 }
